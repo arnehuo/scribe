@@ -42,10 +42,18 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <boost/version.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 
+#if BOOST_VERSION >= 105000
+// Filesystem v3 is included since Boost 1.44
+// v2 is deprecated since 1.46 and removed entirely in 1.50
+#define BOOST_FILESYSTEM_VERSION 3
+#else
+#define BOOST_FILESYSTEM_VERSION 2
+#endif
 
 // For security reasons we can't release everything that's compiled
 // in at facebook. Other users might find this useful as well for

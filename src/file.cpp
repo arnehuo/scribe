@@ -245,7 +245,12 @@ void StdFile::listImpl(const std::string& path, std::vector<std::string>& _retur
       boost::filesystem::directory_iterator dir_iter(path), end_iter;
 
       for ( ; dir_iter != end_iter; ++dir_iter) {
-        _return.push_back(dir_iter->filename());
+#if BOOST_FILESYSTEM_VERSION == 3
+    	  _return.push_back(dir_iter->path().filename().native());
+#else
+	     _return.push_back(dir_iter->filename());
+#endif
+
       }
     }
   } catch (const std::exception& e) {
